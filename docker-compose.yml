@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  rundeck:
+    image: docker.test.fiscal.local/pks/rundeck:1.0.5
+    ports:
+      - 4440:4440
+    environment:
+      RUNDECK_GRAILS_URL: http://localhost:4440
+      RUNDECK_SERVER_FORWARDED: 'false'
+      NOMAD_ADDR: https://nomad.test.fiscal.local
+      NOMAD_REGION: global
+    volumes:
+      - ./data:/home/rundeck/server/data
+      - ./build/rundeck-nomad-plugin.zip:/home/rundeck/libext/rundeck-nomad-plugin.zip

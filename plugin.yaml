@@ -1,0 +1,146 @@
+name: nomad-plugin
+rundeckPluginVersion: 1.2
+author: "@author@"
+date: "@date@"
+version: "@version@"
+url: "@url@"
+providers:
+  - name: nomad-docker-exec
+    service: WorkflowStep
+    plugin-type: script
+    description: 'Execute command in docker container on Hashicorp Nomad'
+    script-interpreter: python -u
+    script-file: nomad-docker-exec.py
+    config:
+      # Nomad
+      - name: nomad_dc
+        title: datacenter
+        type: String
+        description: Nomad datacenter
+        default: dc1
+        renderingOptions:
+          grouping: secondary
+          groupName: Nomad
+      - name: nomad_constraints
+        title: constraints
+        type: String
+        description: |
+          Nomad job constraints, one per line separated by space (e.g 'node.class = service').
+          Interpolation syntax '${}' will be added around left part of equation automatically
+        renderingOptions:
+          grouping: secondary
+          groupName: Nomad
+          displayType: MULTI_LINE
+      - name: nomad_priority
+        title: priority
+        type: Integer
+        description: Nomad job priority
+        default: 50
+        renderingOptions:
+          grouping: secondary
+          groupName: Nomad
+      # Artifacts
+      - name: artifacts_artifacts
+        title: artifacts
+        type: String
+        description: YAML formatted Nomad artifact configuration
+        renderingOptions:
+          grouping: secondary
+          groupName: Artifacts
+          displayType: CODE
+          codeSyntaxMode: yaml
+      # Resources
+      - name: resources_disk
+        title: disk
+        type: Integer
+        description: Nomad allocation disk size in MB
+        default: 100
+        renderingOptions:
+          grouping: secondary
+          groupName: Resources
+      - name: resources_cpu
+        title: cpu
+        type: Integer
+        description: Nomad allocation CPU resource in MHz
+        default: 200
+        renderingOptions:
+          grouping: secondary
+          groupName: Resources
+      - name: resources_ram
+        title: ram
+        type: Integer
+        description: Nomad allocation available RAM in MB
+        default: 256
+        renderingOptions:
+          grouping: secondary
+          groupName: Resources
+      # Docker
+      - name: docker_image
+        title: image
+        type: String
+        description: Docker image to use
+        required: true
+        renderingOptions:
+          grouping: secondary
+          groupName: Docker
+      - name: docker_user
+        title: registry user
+        type: String
+        description: Docker registry user to login
+        renderingOptions:
+          grouping: secondary
+          groupName: Docker
+      - name: docker_password
+        title: registry password
+        type: String
+        description: Docker registry password
+        renderingOptions:
+          grouping: secondary
+          groupName: Docker
+      - name: docker_exec_user
+        title: exec user
+        type: String
+        description: User to execute command as
+        renderingOptions:
+          grouping: secondary
+          groupName: Docker
+      - name: docker_command
+        title: command
+        type: String
+        description: Command to run in container. Not used if script field set
+        renderingOptions:
+          grouping: secondary
+          groupName: Docker
+      - name: docker_args
+        title: arguments
+        type: String
+        description: Optional command arguments. Not used if script field set
+        renderingOptions:
+          grouping: secondary
+          groupName: Docker
+      - name: docker_script
+        title: script
+        type: String
+        description: Shell script to execute. If provided, command and arguments are ignored.
+        renderingOptions:
+          displayType: CODE
+          codeSyntaxMode: sh
+          grouping: secondary
+          groupName: Docker
+      - name: docker_volumes
+        title: volumes
+        type: String
+        description: Volumes to mount. One per line
+        renderingOptions:
+          grouping: secondary
+          groupName: Docker
+          displayType: MULTI_LINE
+      - name: docker_env
+        title: environment variables
+        type: String
+        description: Environment variables to pass to container. One per line (e.g HOME=/home)
+        renderingOptions:
+          displayType: CODE
+          codeSyntaxMode: property
+          grouping: secondary
+          groupName: Docker

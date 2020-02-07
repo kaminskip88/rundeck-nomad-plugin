@@ -1,0 +1,5 @@
+contents/*
+!contents/nomad-docker-exec.py
+build/
+data/
+Pipfile*
