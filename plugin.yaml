@@ -6,7 +6,7 @@ version: "@version@"
 url: "@url@"
 providers:
   - name: nomad-docker-exec
-    service: WorkflowStep
+    service: WorkflowNodeStep
     plugin-type: script
     description: 'Execute command in docker container on Hashicorp Nomad'
     script-interpreter: python -u
@@ -95,6 +95,9 @@ providers:
         type: String
         description: Docker registry password
         renderingOptions:
+          selectionAccessor: STORAGE_PATH
+          valueConversion: STORAGE_PATH_AUTOMATIC_READ
+          storage-path-root: keys
           grouping: secondary
           groupName: Docker
       - name: docker_exec_user
@@ -115,6 +118,13 @@ providers:
         title: arguments
         type: String
         description: Optional command arguments. Not used if script field set
+        renderingOptions:
+          grouping: secondary
+          groupName: Docker
+      - name: docker_entrypoint
+        title: entrypoint
+        type: String
+        description: Optional entrypoint. Not used if script field set
         renderingOptions:
           grouping: secondary
           groupName: Docker
