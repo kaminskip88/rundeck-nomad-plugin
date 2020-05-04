@@ -20,7 +20,8 @@ def main():
         docker_entrypoint='str',
         docker_script='str',
         docker_volumes='list',
-        docker_env='dict'
+        docker_env='dict',
+        docker_privileged='bool'
     )
 
     plugin.nomad_connect(
@@ -48,7 +49,8 @@ def main():
         'entrypoint': plugin.config[
             'docker_entrypoint'].split() if not plugin.config[
                 'docker_script'] else [''],
-        'volumes': plugin.config['docker_volumes']
+        'volumes': plugin.config['docker_volumes'],
+        'privileged': plugin.config['docker_privileged'],
     }
     if plugin.config['docker_user']:
         job_conf['auth'] = {

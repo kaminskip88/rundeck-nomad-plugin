@@ -154,3 +154,11 @@ providers:
           codeSyntaxMode: property
           grouping: secondary
           groupName: Docker
+      - name: docker_privileged
+        title: privileged
+        type: Boolean
+        description: Set "privileged" flag for container
+        default: false
+        renderingOptions:
+          grouping: secondary
+          groupName: Docker
